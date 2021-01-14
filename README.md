@@ -1,2 +1,2 @@
 # quiz
-javascript quiz app 
+frontend quiz app

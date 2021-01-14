@@ -1,0 +1,17 @@
+.flex-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-item {
+    flex-grow: 1;
+}
+
+#choices {
+    margin-top: 10px;
+}
+#next {
+    margin-top: 10px;
+}
