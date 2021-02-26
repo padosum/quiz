@@ -9,13 +9,16 @@
  </head>
  <body>
     <div class="flex-container">
-        <h1>🙋🏼 Frontend Quiz!</h1>
+        <h1>🙋🏼 Front-end Quiz!</h1>
         <div id="quiz" class="flex-item">
             <h2 id="question"></h2>
             <div id="choices">
             </div>
         </div>
-        <input type="button" id="next" value="다음 문제" onclick="loadQuestion();"></input>
+        <div class="flex-item">
+            <input type="button" id="prev" value="이전 문제" onclick="loadPrevQuestion();" style="visibility: hidden;"></input>
+            <input type="button" id="next" value="다음 문제" onclick="loadQuestion();"></input>
+        </div>
     </div>
      
      <script src="script.js"></script>

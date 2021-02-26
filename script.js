@@ -34,61 +34,78 @@ let allQuestions = [
 
 ];
 
+let answer = new Array(allQuestions.length)
+
 let checkAnswer = () => {
-    let choiceValue = document.getElementsByName('choices');
-    let isChecked = false; 
+    let choiceValue = document.getElementsByName('choices')
+    let isChecked = false
 
     if(questionNumber > 0) {
-        let correctAnswer = allQuestions[questionNumber - 1].correctAnswer;
+        let correctAnswer = allQuestions[questionNumber - 1].correctAnswer
         
         // check correct answer
         for(let j=0; j < choiceValue.length; j++) {
             if(choiceValue[j].checked) {
-                isChecked = true; 
-                if(j === correctAnswer) score++; 
+                isChecked = true
+                if(j === correctAnswer) score++
             }
         }
     } else {
-        isChecked = true;
+        isChecked = true
     }
 
-    return isChecked;
+    return isChecked
 }
 
-let loadQuestion = () => {
-    let question = document.getElementById("question");
-    const choicesDiv = document.getElementById("choices");
-
-    if(!checkAnswer()) {
-        alert('답을 선택하세요!');
+const loadQuestion = (isPrev) => {
+    let question = document.getElementById("question")
+    const choicesDiv = document.getElementById("choices")
+    if(questionNumber > 0 && !isPrev) {
+        answer[questionNumber - 1] = document.querySelector('input[name="choices"]:checked').value
+    }
+    
+    if(!checkAnswer() && !isPrev) {
+        alert('답을 선택하세요!')
     } else {
         if(questionNumber <= allQuestions.length - 1) {
-            question.innerHTML = `Q. ${allQuestions[questionNumber].question}`;
-            
-            const choices = allQuestions[questionNumber].choices;
-            let radio = ""; 
+            question.innerHTML = `Q. ${allQuestions[questionNumber].question}`
+            const choices = allQuestions[questionNumber].choices
+            let radio = ""
             for (let i=0; i < choices.length; i++) {
-                let id = `answer${i}`;
-                let choiceVal = choices[i];
-                radio += `<input type='radio' id='${id}' name='choices' value='${id}'>`;
-                radio += `<label for='${id}'>${choiceVal}</label><br>`; 
+                let id = `answer${i}`
+                let choiceVal = choices[i]
+                let isPreAnswer = answer[questionNumber] == id ? 'checked' : ''
+                radio += `<input type='radio' id='${id}' name='choices' value='${id}' ${isPreAnswer}>`
+                radio += `<label for='${id}'>${choiceVal}</label><br>` 
             }
-        
-            choicesDiv.innerHTML = radio;
-            ++questionNumber;
+            choicesDiv.innerHTML = radio
+            ++questionNumber
         } else {
-            choicesDiv.innerHTML = "";
-            question.innerHTML = "최종 점수";
+            choicesDiv.innerHTML = ""
+            question.innerHTML = "최종 점수"
             
-            const scorePara = document.createElement('p');
-            scorePara.style.textAlign = "center";
+            const scorePara = document.createElement('p')
+            scorePara.style.textAlign = "center"
             scorePara.innerText = `${score} (${score} / ${questionNumber})`
-            document.getElementById('quiz').appendChild(scorePara);
-            document.getElementById('next').style.display = "none";
+            document.getElementById('quiz').appendChild(scorePara)
+            document.getElementById('next').style.display = "none"
+            document.getElementById('prev').style.display = "none"
         }
     }
+    setButton()
+}
+
+const setButton = () => {
+    if(questionNumber > 1) {
+        document.getElementById("prev").style.visibility = "visible"
+    }
+}
+
+const loadPrevQuestion = () => {
+    questionNumber = questionNumber - 2
+    loadQuestion(true)
 }
 
 window.addEventListener('load', () => {
-    loadQuestion();
+    loadQuestion(false)
 });

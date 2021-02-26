@@ -56,7 +56,8 @@ button {
 .flex-container {
 	padding: 10px;
 }
-.flex-item {
+
+#quiz {
 	padding: 10px;
 	border: 3px solid rgb(50,50,40);
 	color: white;
